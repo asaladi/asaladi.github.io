@@ -39,7 +39,8 @@
         <h1>CSE 168 Final Project: A-Trous Wave Filter</h1>
         <p><strong>By:</strong> Annapurna Saladi, Robin James Villareal</p>
 
-        <p>In this project, we implemented a denoiser that operates on noisy images with lower sample counts, and applied the A-Trous wave filter to make the image cleaner. We targeted the path tracer’s output, which often generates fireflies and other noise at low sample counts. Rather than increasing sample count and rendering time, we applied the denoising filter.</p>
+        <p>In this project, we implemented a denoiser that operates on noisy images with lower sample counts, and applied the a-trous wave filter to make the image cleaner. We wanted to target the pathtracer sampling, which often generates fireflies and other noise at lower sample counts. Rather than increasing the sample count and using more computational time to generate a less noisy image, we apply the denoising filter.
+            </p>
     </div>
 
     <div class="section">
@@ -64,22 +65,21 @@
 
     <div class="section">
         <h2>Discussion</h2>
-        <p>The A-Trous filter maintains the sharpness of edges but loses some quality in material appearance, such as reflections and shadows. This can be mitigated by adjusting sensitivity parameters for each feature in the buffer.</p>
-        <ul>
-            <li><strong>Normal sensitivity:</strong> High (to preserve edge detail)</li>
-            <li><strong>Albedo sensitivity:</strong> Lower (since albedo does not represent final material appearance)</li>
-        </ul>
-        <p>Fine-tuning these values can yield a more desirable, truth-like image.</p>
+        <p>
+            The result we see is expected with how the paper’s denoising works. We would like to note that this filter, while it maintains the sharpness of edges in the scene, loses some of the quality in the materials, such as reflections and shadows. To adjust this, we can tune the sensitivity parameters for each of the features given in the buffer. To maintain the sharpness of edges and distinguishing objects, we keep the sensitivity of the normals to be very high. Since we can see the albedo buffer only reads the diffuse value and changes the observed material of the objects in the scene, we can lower the sensitivity of it. Adjusting these parameters can give up a more desirable looking image that is closer to “truth”.
+        </p>
     </div>
 
     <div class="section">
         <h2>Other Renders</h2>
 
         <h3>Without Filter:</h3>
-        <img src="no_filter_other.png" alt="Other scene without filter">
+        <img src="no_filter_A.png" alt="A scene without filter">
+        <img src="no_filter_B.png" alt="B scene without filter">
 
         <h3>With Filter:</h3>
-        <img src="with_filter_other.png" alt="Other scene with A-Trous filter">
+        <img src="with_filter_A.png" alt="A scene with A-Trous filter">
+        <img src="with_filter_B.png" alt="B scene with A-Trous filter">
     </div>
 
     <div class="section">
