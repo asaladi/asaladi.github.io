@@ -3,27 +3,90 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Project Proposal</title>
+    <title>CSE 168 Final Project - A-Trous Wave Filter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2em;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1, h2 {
+            color: #222;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            margin: 10px 0;
+        }
+        .section {
+            background-color: #fff;
+            padding: 1em 2em;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+            margin-bottom: 2em;
+        }
+        a {
+            color: #0066cc;
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>CSE 168 Project Proposal</h1>
+    <div class="section">
+        <h1>CSE 168 Final Project: A-Trous Wave Filter</h1>
+        <p><strong>By:</strong> Annapurna Saladi, Robin James Villareal</p>
 
-    <h2>Current Renders</h2>
+        <p>In this project, we implemented a denoiser that operates on noisy images with lower sample counts, and applied the A-Trous wave filter to make the image cleaner. We targeted the path tracer’s output, which often generates fireflies and other noise at low sample counts. Rather than increasing sample count and rendering time, we applied the denoising filter.</p>
+    </div>
 
-    <img src="imgs/cornellBRDF.png" alt="Description of image" width="500">
-    <img src="imgs/dragon.png" alt="Description of image" width="500">
-    <img src="imgs/ggx.png" alt="Description of image" width="500">
-    <img src="imgs/mis.png" alt="Description of image" width="500">
-    
-    <h2>Goals (denoised) </h2>
-    
-    <img src="imgs/cornellBRDFREF.png" alt="Description of image" width="500">
-    <img src="imgs/dragonREF.png" alt="Description of image" width="500">
-    <img src="imgs/ggxREF.png" alt="Description of image" width="500">
-    <img src="imgs/misREF.png" alt="Description of image" width="500">
-    
+    <div class="section">
+        <h2>Steps</h2>
+        <ol>
+            <li>Maintain buffers of the image’s albedo color, normals, position, and depth.</li>
+            <li>Pass the buffers to the denoiser function, which uses a fixed convolution kernel for multi-scale filtering.</li>
+            <li>For each pixel, compute weights using nearby pixels in its kernel. The weights are based on features from the buffers to preserve scene detail (see source paper).</li>
+            <li>Update the color buffer with the denoised result and return the final image.</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>Results: Hero Image</h2>
+
+        <h3>Without Filter:</h3>
+        <img src="no_filter_hero.png" alt="Hero image without filter">
+
+        <h3>With Filter:</h3>
+        <img src="with_filter_hero.png" alt="Hero image with A-Trous filter">
+    </div>
+
+    <div class="section">
+        <h2>Discussion</h2>
+        <p>The A-Trous filter maintains the sharpness of edges but loses some quality in material appearance, such as reflections and shadows. This can be mitigated by adjusting sensitivity parameters for each feature in the buffer.</p>
+        <ul>
+            <li><strong>Normal sensitivity:</strong> High (to preserve edge detail)</li>
+            <li><strong>Albedo sensitivity:</strong> Lower (since albedo does not represent final material appearance)</li>
+        </ul>
+        <p>Fine-tuning these values can yield a more desirable, truth-like image.</p>
+    </div>
+
+    <div class="section">
+        <h2>Other Renders</h2>
+
+        <h3>Without Filter:</h3>
+        <img src="no_filter_other.png" alt="Other scene without filter">
+
+        <h3>With Filter:</h3>
+        <img src="with_filter_other.png" alt="Other scene with A-Trous filter">
+    </div>
+
+    <div class="section">
+        <h2>Source Paper</h2>
+        <p><a href="https://jo.dreggn.org/home/2010_atrous.pdf" target="_blank">A-Signal Processing Framework for Denoising</a></p>
+    </div>
+
 </body>
 
 </html>
